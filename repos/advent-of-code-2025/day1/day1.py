@@ -27,16 +27,13 @@ def get_protocol() -> str:
 
 def verify_document(filename: str) -> bool:
     with open(filename) as doc:
-        valid = all((line.strip()[0].lower() == 'l' or 'r') and line.strip()[1:].isdigit() for line in doc)
-    doc.close()
-    return valid
+        return all((line.strip()[0].lower() == 'l' or 'r') and line.strip()[1:].isdigit() for line in doc)
 
 def get_password(filename: str, init_dial_pos: int, protocol = get_protocol()) -> int:
     password = 0
     if verify_document(filename):
         with open(filename) as doc:
             parts = [[line.strip()[0].lower(), int(line.strip()[1:])] for line in doc]
-        doc.close()
     
     current_pos = init_dial_pos
     num_instructions = len(parts)
